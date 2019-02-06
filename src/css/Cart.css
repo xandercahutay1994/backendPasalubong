@@ -1,0 +1,39 @@
+.fa-shopping-cart {
+  font-size: 1.7rem;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.4rem;
+  color: blue;
+}
+
+.cart {
+  margin-right: 3rem;
+}
+
+.cartSummary {
+  display: flex;
+  flex-direction: row;
+}
+
+.cartImage {
+  width: 150px;
+  height: 150px;
+}
+@media screen and (max-width: 768px){
+  .cartSummary {
+    display: flex;
+    flex-direction: column;
+    
+  }
+  .cartImage {
+    width: 90%;
+  }
+}
+
+.cartSummary {
+  margin-top: 3rem;
+}
+
+.orderSummary {
+  margin-top: 8rem;
+}

@@ -1,0 +1,29 @@
+/* 
+    SELLER SIGNUP
+*/
+.signUpSeller{
+    margin-top: 3%;
+}
+
+.seller{
+    font-family: Arial, Helvetica, sans-serif
+}
+
+form{
+    margin: auto;
+}
+
+.btnSignUp {
+    margin-top: 5%
+}
+
+
+/* SELLER DASHBOARD */
+
+.row {
+    margin-top: 5%;
+}
+
+.photo {
+    margin: auto;
+}

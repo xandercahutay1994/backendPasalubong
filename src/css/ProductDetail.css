@@ -1,0 +1,50 @@
+.title, label {
+  font-family: Tahoma;
+  color: darkslategray;
+}
+
+.card_detail {
+  margin-top: 0.2rem;
+  text-align: left;
+}
+
+.label {
+  font-weight: 600;
+}
+
+.span {
+  font-weight: lighter;
+}
+
+.mB {
+  margin-bottom: -1.5rem;
+}
+
+.edit {
+  position: absolute;
+  float: right;
+  margin-top: -2rem;
+}
+
+.button {
+  border: none;
+  background: none;
+}
+
+.quantity {
+  font-size: 1.2rem;
+}
+
+.comments {
+  /* display: flex; */
+  flex-direction: column;
+}
+
+.commentsSection {
+  margin-top: -30px;
+}
+
+.btnRate {
+  border: none;
+  background: none;
+}
