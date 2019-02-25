@@ -15,7 +15,11 @@ import {
     GIVE_FEEDBACK,
     CHECK_IF_BUYER_ORDERED,
     RETRIEVED_ALL_REVIEWS_OF_PRODUCT,
-    LISTS_OF_SELLERS
+    LISTS_OF_SELLERS,
+    RETRIEVED_BUYER_DETAILS,
+    UPDATE_BUYER_DETAILS,
+    RETRIEVED_DELICACIES_BEST,
+    RETRIEVED_SOUVENIRS_BEST
 } from '../types/product'
 import {
     ERROR_CREATING_PRODUCT,
@@ -38,7 +42,11 @@ import {
     GIVE_FEEDBACK_RATE_API,
     CHECK_IF_BUYER_ORDERED_API,
     LISTS_OF_SELLERS_API,
-    GET_ALL_REVIEWS_OF_PRODUCT_API
+    GET_ALL_REVIEWS_OF_PRODUCT_API,
+    GET_BUYER_DETAILS_API,
+    UPDATE_BUYER_DETAILS_API,
+    GET_DELICACIES_BEST_API,
+    GET_SOUVENIRS_BEST_API
 } from '../api/api'
 
 export function* Create_Product({payload}) {
@@ -188,7 +196,8 @@ export function* Filter_By_Places({ payload }) {
 
     yield put({
         type: FILTER_BY_PLACES,
-        sellersProduct: result.data
+        // sellersProduct: result.data
+        matchSearch: result.data
     })
 }
 
@@ -269,7 +278,39 @@ export function* ListsOfSellers() {
 
     yield put({
         type: LISTS_OF_SELLERS,
-        sellers: result.data
+        sellers: result.data.details,
+        listSellers: result.data.sellers,
     })
+}
 
+export function* GetBuyerDetails({ payload }) {
+    const result = yield call(axios, GET_BUYER_DETAILS_API + payload.buyer_id)
+    yield put({
+        type: RETRIEVED_BUYER_DETAILS,
+        buyerDetails: result.data[0],
+    })   
+}
+
+export function* UpdateBuyerDetails({ payload }) {
+    const result = yield call(axios.post, UPDATE_BUYER_DETAILS_API, payload)
+    yield put({
+        type: UPDATE_BUYER_DETAILS,
+        buyerDetails: result.data[0],
+    })
+}
+
+export function* GetDelicaciesBest() {
+    const result = yield call(axios, GET_DELICACIES_BEST_API)
+    yield put({
+        type: RETRIEVED_DELICACIES_BEST,
+        delicacies: result.data,
+    })   
+}
+
+export function* GetSouvenirsBest() {
+    const result = yield call(axios, GET_SOUVENIRS_BEST_API)
+    yield put({
+        type: RETRIEVED_SOUVENIRS_BEST,
+        souvenirs: result.data,
+    })   
 }

@@ -20,7 +20,11 @@ import {
     GIVE_FEEDBACK_RATE_REQUESTED,
     CHECK_IF_BUYER_ORDERED_REQUESTED,
     GET_ALL_REVIEWS_OF_PRODUCT_REQUESTED,
-    LISTS_OF_SELLERS_REQUESTED
+    LISTS_OF_SELLERS_REQUESTED,
+    GET_BUYER_DETAILS_REQUESTED,
+    UPDATE_BUYER_DETAILS_REQUESTED,
+    GET_DELICACIES_BEST_REQUESTED,
+    GET_SOUVENIRS_BEST_REQUESTED
 } from '../types/product'
 import { 
     CREATE_SELLER_REQUESTED,
@@ -37,7 +41,20 @@ import {
     GET_COINS_PH_PAYMENT_REQUESTED,
     UPDATE_SELLER_TOKEN_REQUESTED,
     SEARCH_PAID_UNPAID_SELLER_REQUESTED,
-    GET_ORDERS_OF_BUYERS_REQUESTED
+    GET_ORDERS_OF_BUYERS_REQUESTED,
+    UPDATE_BUYER_STATUS_WHEN_ORDER_PAID_REQUESTED,
+    GET_DELIVERY_DETAILS_REQUESTED,
+    GET_SELLER_DETAILS_REQUESTED,
+    UPDATE_SELLER_DETAILS_REQUESTED,
+    GET_ALL_SELLERS_WHO_PAID_REQUESTED,
+    GET_BUYERS_NOTICATION_REQUESTED,
+    UPDATE_NOTIFICATION_STATUS_REQUESTED,
+    SEARCH_ORDERS_REQUESTED,
+    GET_RESERVATION_TAB_DETAILS_REQUESTED,
+    SEARCH_RESERVATION_TAB_DETAILS_REQUESTED,
+    UPDATE_PENDING_DELIVERY_REQUESTED,
+    GOOGLE_PLACE_REQUESTED,
+    GET_BUYERS_ORDERED_BY_PRODUCT_REQUESTED
 } from '../types/seller'
 import { 
     CREATE_BUYER_REQUESTED,
@@ -52,7 +69,8 @@ import {
     GET_RESERVATION_DETAILS_REQUESTED,
     DELETE_RESERVATION_REQUESTED,
     SEARCH_RESERVATION_REQUESTED,
-    MOVE_TO_CART_REQUESTED
+    MOVE_TO_CART_REQUESTED,
+    UPDATE_BUYERS_ORDERS_REQUESTED
 } from '../types/cart'
 import { 
     Get_Product, 
@@ -69,7 +87,11 @@ import {
     GiveFeedbackRate,
     CheckIfBuyerOrdered,
     GetAllReviewsOfProduct,
-    ListsOfSellers
+    ListsOfSellers,
+    GetBuyerDetails,
+    UpdateBuyerDetails,
+    GetDelicaciesBest,
+    GetSouvenirsBest
  } from './product'
 import { 
     Create_Buyer, 
@@ -84,7 +106,8 @@ import {
     GetReservationDetails,
     DeleteReservation,
     SearchReservation,
-    MoveToCart
+    MoveToCart,
+    UpdateBuyersOrders
 } from './cart'
 import { 
     Create_Seller,
@@ -101,7 +124,20 @@ import {
     Activate_Seller,
     GetCoinsPhPayment,
     UpdateTokenSeller,
-    SearchPaidUnpaidSeller
+    SearchPaidUnpaidSeller,
+    UpdateBuyerStatusWhenPaid,
+    GetDeliveryDetails,
+    GetSellerDetails,
+    UpdateSellerDetails,
+    GetAllSellersWhoPaidRequested,
+    GetBuyersNotification,
+    UpdateNotificationStatus,
+    SearchOrders,
+    GetReservationTabDetails,
+    SearchReservationTabDetails,
+    UpdatePendingDelivery,
+    GooglePlace,
+    GetBuyersOrderedByProduct
 } from './seller'
 
 export default function* sagas() {
@@ -147,4 +183,22 @@ export default function* sagas() {
     yield takeLatest(CHECK_IF_BUYER_ORDERED_REQUESTED, CheckIfBuyerOrdered)
     yield takeLatest(GET_ALL_REVIEWS_OF_PRODUCT_REQUESTED, GetAllReviewsOfProduct)
     yield takeLatest(LISTS_OF_SELLERS_REQUESTED, ListsOfSellers)
+    yield takeLatest(UPDATE_BUYERS_ORDERS_REQUESTED, UpdateBuyersOrders)
+    yield takeLatest(UPDATE_BUYER_STATUS_WHEN_ORDER_PAID_REQUESTED, UpdateBuyerStatusWhenPaid)
+    yield takeLatest(GET_DELIVERY_DETAILS_REQUESTED, GetDeliveryDetails)
+    yield takeLatest(GET_SELLER_DETAILS_REQUESTED, GetSellerDetails)
+    yield takeLatest(UPDATE_SELLER_DETAILS_REQUESTED, UpdateSellerDetails)
+    yield takeLatest(GET_BUYER_DETAILS_REQUESTED, GetBuyerDetails)
+    yield takeLatest(UPDATE_BUYER_DETAILS_REQUESTED, UpdateBuyerDetails)
+    yield takeLatest(GET_ALL_SELLERS_WHO_PAID_REQUESTED, GetAllSellersWhoPaidRequested)
+    yield takeLatest(GET_BUYERS_NOTICATION_REQUESTED, GetBuyersNotification)
+    yield takeLatest(UPDATE_NOTIFICATION_STATUS_REQUESTED, UpdateNotificationStatus)
+    yield takeLatest(SEARCH_ORDERS_REQUESTED, SearchOrders)
+    yield takeLatest(GET_RESERVATION_TAB_DETAILS_REQUESTED, GetReservationTabDetails)
+    yield takeLatest(SEARCH_RESERVATION_TAB_DETAILS_REQUESTED, SearchReservationTabDetails)
+    yield takeLatest(GET_DELICACIES_BEST_REQUESTED, GetDelicaciesBest)
+    yield takeLatest(GET_SOUVENIRS_BEST_REQUESTED, GetSouvenirsBest)
+    yield takeLatest(UPDATE_PENDING_DELIVERY_REQUESTED, UpdatePendingDelivery)
+    yield takeLatest(GOOGLE_PLACE_REQUESTED, GooglePlace)
+    yield takeLatest(GET_BUYERS_ORDERED_BY_PRODUCT_REQUESTED, GetBuyersOrderedByProduct)
 }

@@ -27,3 +27,39 @@ form{
 .photo {
     margin: auto;
 }
+
+
+/* SELLER PAGE */
+
+.sellerPage {
+    margin-top: 9rem;
+}
+
+.shopName {
+    font-family: monospace;
+    font-size: 3rem;
+    margin-top: -22px;
+    margin-bottom: 3rem;
+    color: darkslategray
+}
+
+.update-account {
+    margin-top: 5%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.update-font {
+    font-size: 3rem;
+}
+
+.sellerPageMap {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.shopName-map {
+    margin-top: 7rem;
+}

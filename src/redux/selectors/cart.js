@@ -18,7 +18,9 @@ export default createSelector(
           message: cart.message,
           reservations: cart.reservations,
           reservationQuantity: cart.reservationQuantity,
-          isFetching: cart.isFetching
+          isFetching: cart.isFetching,
+          isOrderUpdated: cart.isOrderUpdated,
+          isAddedToCart: cart.isAddedToCart
         }
     }
 

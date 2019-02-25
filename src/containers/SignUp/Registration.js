@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import '../../css/Registration.css'
-import { Button }from '@material-ui/core'
+import { Button, Snackbar } from '@material-ui/core'
 import Steppers from '../Steppers'
 import { compose } from 'recompose'
 import ButtonSpinner from '../../components/ButtonSpinner'
@@ -15,7 +15,9 @@ import {
     VERIFY_EMAIL_ACTION,
     CLEAR_SELLER_STATE_ACTION,
     CHECK_CODE_EXIST_ACTION,
-    CREATE_SELLER_ACTION
+    CREATE_SELLER_ACTION,
+    GOOGLE_PLACE_ACTION,
+    CLEAR_GOOGLE_PLACE_ACTION
 } from '../../redux/actions/seller'
 
 class Registration extends React.PureComponent {
@@ -33,7 +35,10 @@ class Registration extends React.PureComponent {
             shopAddress: '',
             password: '',
             phone: '',
-            sellerEmail: ''
+            sellerEmail: '',
+            permits: [],
+            vertical: 'top',
+            horizontal: 'center'
         }
     }
 
@@ -89,7 +94,7 @@ class Registration extends React.PureComponent {
     successMessage = () => {
         swal({
             title: "Congratulations!",
-            text: `Hello! We'll validate your business(shop name) first if it has a DTI permit. We'll notify you on your email account 
+            text: `Hello! We'll validate your business(shop name) first if it has a DTI, Sanitary and Business permit. We'll notify you on your email account 
                     on the outcomes of our validation. Thank you!`,
             icon: "success"
         })
@@ -103,19 +108,26 @@ class Registration extends React.PureComponent {
 
     handleInputChange = e => {
         const { name, value } = e.target
-
+        
         this.setState({
             [name]: value
+        }, ()=> {
+            if (name === 'shopAddress') {
+                setTimeout(()=> {
+                    this.props.dispatch(GOOGLE_PLACE_ACTION(value))
+                }, 2000)
+            }
         })
     }
 
     handleFormSubmit = e => {
-        this.setState({ issubmit: true })
         e.preventDefault()
         const { name } = e.target[0]
-        const { code, img_url, sellerEmail, shopName, shopAddress, password, phone } = this.state
+        const { code, img_url, sellerEmail, shopName, shopAddress, password, phone, permits } = this.state
         const { email, dispatch } = this.props
-        
+
+
+        this.setState({ issubmit: true })
         if (name === 'code') {
             dispatch(CHECK_CODE_EXIST_ACTION({email, code}))
             return
@@ -124,16 +136,20 @@ class Registration extends React.PureComponent {
             dispatch(VERIFY_EMAIL_ACTION({email:sellerEmail}))
             return
         }
-
+        if (permits.length < 2) {
+            return
+        }
         const postData = {
-            img_url,
+            // img_url,
             shopName,
             shopAddress,
             email,
             password,
-            phone
+            phone,
+            img_url: permits[0],
+            sanitary: permits[1],
+            business: permits[2]
         }
-
         dispatch(CREATE_SELLER_ACTION(postData))
     }
 
@@ -163,13 +179,21 @@ class Registration extends React.PureComponent {
     }
 
     handleImgLoad = e => {
+        const { permits } = this.state
+        if (permits.length > 2) {
+            return
+        }
         const file = e.target.files[0]
         const reader = new FileReader()
         reader.readAsDataURL(file)
         reader.onload = e => {
-            this.setState({
-                img_url: e.target.result
-            })
+            if (permits.includes(e.target.result)) {
+                return 
+            }
+            this.setState(prevState => ({
+                img_url: e.target.result,
+                permits: permits.length === 0 ? [e.target.result] : [...prevState.permits, e.target.result]
+            }))
         }
     }
 
@@ -184,7 +208,6 @@ class Registration extends React.PureComponent {
     formStepOne = () => {
         const { sellerEmail, issubmit } = this.state
         const { resStatus, hasToken } = this.props
-        // const message = resStatus === 200 ? 'Email sent successfully!' : ''
 
         return (
             <form className='col-lg-6 mt-4' onSubmit={this.handleFormSubmit}>
@@ -199,7 +222,6 @@ class Registration extends React.PureComponent {
                         value={sellerEmail}
                         required/>
                 </div>
-                {/* <h5 className='text-center'>{message}</h5> */}
                 { resStatus === 200 && this.sentEmail() }
                 <div className='row loginDiv'>
                     <div className='col-lg-6'>
@@ -287,21 +309,75 @@ class Registration extends React.PureComponent {
         )
     }
 
+    setImgUrl = (e, i) => {
+        this.setState({
+            img_url: e
+        })
+    }
+
     formStepThree = () => {
-        const { img_url, image, shopName, shopAddress, password, phone, issubmit } = this.state
+        const { img_url, image, shopName, shopAddress, password, phone, issubmit, permits,
+            vertical, horizontal 
+        } = this.state
         const { message, email } = this.props
 
         return (
             <div className='signUpSeller'>  
+                <Snackbar
+                    anchorOrigin={{ vertical, horizontal }}
+                    open={permits && permits.length <= 2}
+                    onClose={()=>{}}
+                    ContentProps={{
+                    'aria-describedby': 'message-id',
+                    }}
+                    message={<span id="message-id">
+                    <i className='fa fa-close text-danger' style={{ fontSize: '20px', marginRight: '5px' }}></i>
+                    You need to upload 3 images that contain valid DTI,Business and Sanitary Permits!
+                    </span>}
+                />
                 <h2 className='text-center seller'> SELLER SIGN UP</h2>
-                <form className='col-lg-6 col-md-8 mt-4' onSubmit={this.handleFormSubmit}>
+                <form className='col-lg-6 col-md-8' onSubmit={this.handleFormSubmit}>
                     <PhotoUpload
                         image={image}
                         image_url={img_url}
                         imgLoad={this.handleImgLoad}
                         className='photo'
                     />
-                    <div className='form-group'>
+                    <span className='dti-image-span text-center'> 
+                        {
+                            permits.length <= 2 &&
+                            <h5 className='dti-image-font '> 
+                                Upload the image of your valid 
+                                { permits.length === 0 && ' DTI Permit' }  
+                                { permits.length === 1 && ' Sanitary Permit' }  
+                                { permits.length === 2 && ' Business Permit' }  
+                                { permits.length > 2 && ' Business Permit' }  
+                            </h5> 
+                        }
+                    </span>
+                    <div className='d-flex justify-content-center mt-5 dti-image-permits '>
+                        {
+                            permits && permits.length > 0 ?  
+                                permits.map((e, i) => (
+                                    <div className='permit-div' key={i}>
+                                        <img 
+                                            src={e}
+                                            className='img-permit' 
+                                            alt='permits' 
+                                            onClick={()=>this.setImgUrl(e, i)}
+                                        />
+                                        <span className='label-permit'>
+                                            {i === 0 && <h5> DTI </h5>}
+                                            {i === 1 && <h5> Sanitary </h5>}
+                                            {i === 2 && <h5> Business </h5>}
+                                        </span>
+                                    </div>
+                                )) 
+                            :
+                                ''
+                        }
+                    </div>
+                    <div className='form-group mt-3'>
                         <label>Phone # *</label>
                         <input 
                             type='number' 
@@ -316,7 +392,6 @@ class Registration extends React.PureComponent {
                             For buyer's purpose
                         </small>
                     </div>
-                    
                     <div className='form-group'>
                         <label>Shop Name  *</label>
                         <input 
@@ -327,7 +402,7 @@ class Registration extends React.PureComponent {
                             placeholder='Enter Shop'
                             value={shopName}/>
                     </div>
-                    <div className='form-group'>
+                    <div className='form-group mb-3 mt-3'>
                         <label>Shop Address  *</label>
                         <input 
                             type='text' 
@@ -335,8 +410,45 @@ class Registration extends React.PureComponent {
                             onChange={this.handleInputChange}
                             className='form-control' 
                             placeholder='Enter Address'
-                            value={shopAddress}/>
+                            value={shopAddress}
+                        />
+                        {/* <div id='myDropdown' className='dropdown-content'>
+                            <input 
+                                type='text' 
+                                name='shopAddress'
+                                onChange={this.handleInputChange}
+                                className='form-control' 
+                                placeholder='Enter Address'
+                                value={shopAddress}
+                            />
+                            {
+                                shopAddress ?
+                                    philPlaces && philPlaces.predictions &&
+                                    philPlaces.predictions.length > 0 &&
+                                    philPlaces.predictions.map(item => (
+                                        <div className='linkTo' 
+                                            key={item.id} 
+                                            onClick={()=>this.setPlace(item.description)}
+                                        >
+                                            { item.description }
+                                        </div>
+                                    ))
+                                :
+                                ''
+                            }
+                        </div> */}
                     </div>
+                    {/* <div className='form-group'>
+                        <label>Shop Address  *</label>
+                        <input 
+                            type='text' 
+                            name='shopAddress'
+                            onChange={this.handleInputChange}
+                            className='form-control' 
+                            placeholder='Enter Address'
+                            value={shopAddress}
+                        />
+                    </div> */}
                     <div className='form-group'>
                         <label>Email address *</label>
                         <input 
@@ -375,7 +487,17 @@ class Registration extends React.PureComponent {
         )
     }
 
+    setPlace = shopAddress => {
+        this.setState({
+            shopAddress
+        }, ()=> {
+            this.props.dispatch(CLEAR_GOOGLE_PLACE_ACTION())
+        })
+    }
+
     renderRegistrationForm = () => {
+        // return this.formStepThree()
+        
         const { stepIndex } = this.state
         if (stepIndex === 0) {
             return this.formStepOne()
@@ -384,15 +506,14 @@ class Registration extends React.PureComponent {
         } else if(stepIndex === 2) {
             return this.formStepThree()
         }
-
         return null
     }
 
     render() {
         const { stepIndex } = this.state
-
+        
         return(
-            <div className='mt-5 container'>
+            <div className='container sellerReg'>
                 <Steppers stepIndex={stepIndex} handleStepIndex={this.handleStepInc}/>
                 { this.renderRegistrationForm() }
             </div>

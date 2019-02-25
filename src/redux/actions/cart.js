@@ -9,7 +9,9 @@ import {
     GET_RESERVATION_DETAILS_REQUESTED,
     DELETE_RESERVATION_REQUESTED,
     SEARCH_RESERVATION_REQUESTED,
-    MOVE_TO_CART_REQUESTED
+    MOVE_TO_CART_REQUESTED,
+    UPDATE_BUYERS_ORDERS_REQUESTED,
+    CLEAR_ADDED_TO_CART
 } from '../types/cart'
 
 export function ADD_TO_CART_ACTION(payload) {
@@ -85,5 +87,18 @@ export function MOVE_TO_CART_ACTION(payload) {
     return {
         type: MOVE_TO_CART_REQUESTED,
         payload
+    }
+}
+
+export function UPDATE_BUYERS_ORDERS_ACTION(payload) {
+    return {
+        type: UPDATE_BUYERS_ORDERS_REQUESTED,
+        payload
+    }
+}
+
+export function CLEAR_ADDED_TO_CART_ACTION() {
+    return {
+        type: CLEAR_ADDED_TO_CART
     }
 }

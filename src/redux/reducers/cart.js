@@ -10,7 +10,9 @@ const cartInitialState = {
     isCheckout: false,
     reservations: [],
     reservationQuantity: [],
-    isFetching: true
+    isFetching: true,
+    isOrderUpdated: false,
+    isAddedToCart: false
 }
 
 const cartActionsHandler = {
@@ -18,7 +20,14 @@ const cartActionsHandler = {
         return {
             ...state,
             // cartData: [...state.cartData, action.data],
-            cartOrderTotal: localStorage.getItem('cartOrderTotal')
+            cartOrderTotal: localStorage.getItem('cartOrderTotal'),
+            isAddedToCart: true
+        }
+    },
+    CLEAR_ADDED_TO_CART: (state) => {
+        return {
+            ...state,
+            isAddedToCart: false
         }
     },
     RETRIEVED_ORDERS_SUMMARY: (state, { cartData, resStatus, totalPayment, buyerDetails }) => {
@@ -28,7 +37,8 @@ const cartActionsHandler = {
             resStatus,
             totalPayment,
             buyerDetails,
-            isFetching: false
+            isFetching: false,
+            isOrderUpdated: false
         }
     },
     REMOVE_TO_CART: (state, { message, cart_id }) => {
@@ -79,6 +89,12 @@ const cartActionsHandler = {
             reservations,
             reservationQuantity,
             resStatus: 200
+        }
+    },
+    UPDATE_BUYERS_ORDERS: (state, { updated }) => {
+        return {
+            ...state,
+            isOrderUpdated: updated
         }
     }
 }

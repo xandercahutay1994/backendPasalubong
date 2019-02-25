@@ -1,5 +1,4 @@
 import React from 'react'
-import ImageLoader from './ImageLoader'
 import { productImgURL } from '../redux/api/api'
 import {
   Paper,
@@ -13,7 +12,8 @@ const Summary = ({
   cartData,
   onRemove, onReserve,
   onInputChange,
-  fieldValues
+  fieldValues,
+  dataRemain
 }) => { 
   return fieldValues.length > 0 && fieldValues.map((cart, i) => (
   // return cartData.map((cart, i) => (
@@ -22,7 +22,7 @@ const Summary = ({
       elevation={2} 
       className='mr-4 mb-2' 
     > 
-      <div className='cartSummary'>
+      <div className='summary-section'>
         <Link to={`product-details/${cart.product_id}`}>
           <img 
             src={`${productImgURL}${cart.image}`}
@@ -39,20 +39,32 @@ const Summary = ({
           </Typography>
           <div className='row'>
             <div className='ml-3'>
-              Quantity
+              Quantity Left :
+              <span className='text-primary'> { cart.quantity } </span>
             </div>
-            <div>
+          </div>
+          <div className='row'>
+            <div className='ml-3'>
+              Minimum Order :
+              <span className='text-primary'> { cart.minimum_order } </span>
+            </div>
+          </div>
+          <div className='row'>
+            <div className='ml-3'>
+              Item Quantity
+            </div>
+            <div className='mt-1'>
               <input 
                 type='number' 
                 name="orderQuantity" 
                 className='col-lg-5 col-md-10 col-sm-10 form-control ml-3'
                 style={{ marginTop: '-3px'}}
                 value={cart.orderQuantity}
-                onChange={(e)=>onInputChange(e, cart.product_id)}
+                onChange={(e)=>onInputChange(e, cart.product_id, cart.quantity)}
               />
             </div>
           </div>
-          <div className='row'>
+          <div className='row btnActions'>
             <div className='col'>
               <Button   
                 raised='raised'

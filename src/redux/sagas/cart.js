@@ -9,7 +9,8 @@ import {
   GET_RESERVATION_DETAILS_API,
   DELETE_RESERVATION_API,
   SEARCH_RESERVATION_API,
-  MOVE_TO_CART_API
+  MOVE_TO_CART_API,
+  UPDATE_BUYERS_ORDERS_API
 } from '../api/api'
 import {
   ADDED_TO_CART,
@@ -17,21 +18,12 @@ import {
   REMOVE_TO_CART,
   CHECKOUT_CART,
   RESERVED_BUYER,
-  RETRIEVED_RESERVATION_DETAILS
+  RETRIEVED_RESERVATION_DETAILS,
+  UPDATE_BUYERS_ORDERS
 } from '../types/cart'
 
 export function* Add_To_Cart({payload}){
   const result =  yield call(axios.post, ADD_TO_CART_API, payload)
-  // let quantity = response.quantity
-
-  // const currOrderTotal = JSON.parse(localStorage.getItem('cartOrderTotal'))
-
-  // if (response.buyer_id) {
-  //   localStorage.setItem('cartOrderTotal', quantity + currOrderTotal)   
-  // }
-
-  // localStorage.setItem('cartOrderTotal', JSON.stringify(payload.orderQuantity + currOrderTotal,10))
-
   localStorage.setItem('cartOrderTotal', JSON.stringify(result.data.quantity))
   yield put({
     type: ADDED_TO_CART,
@@ -181,5 +173,18 @@ export function* MoveToCart({ payload }) {
     type: RETRIEVED_RESERVATION_DETAILS,
     reservations: result.data.reservations,
     resStatus: 200
+  })
+}
+
+export function* UpdateBuyersOrders({ payload }) {
+  const result = yield call(axios.post, UPDATE_BUYERS_ORDERS_API, payload)
+
+  if (result.status !== 200) {
+    return
+  }
+
+  yield put({
+    type: UPDATE_BUYERS_ORDERS,
+    updated: true
   })
 }

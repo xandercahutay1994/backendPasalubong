@@ -12,10 +12,10 @@ const Cart = props => {
   
   return (
     <div className='cart'>
-      <Link to='/cart' >
+      <Link to='/cart' className='col-lg-12 col-md-12'>
         <Badge color={badgeColor} badgeContent={hasOrder} >
             <i className="fa fa-shopping-bag ml-3" style={{fontSize:'25px'}}>
-            </i> 
+            </i>
         </Badge>
       </Link> 
     </div>

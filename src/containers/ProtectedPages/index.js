@@ -13,6 +13,10 @@ import InactiveProducts from './InactiveProducts'
 import BuyerOrders from './BuyerOrders'
 import Reservation from './Reservation'
 import SellerShopPage from './SellerShopPage'
+import BuyerAccount from './BuyerAccount'
+import BuyerNotification from './BuyerNotification'
+import ReservationTab from './ReservationTab'
+import SellerMap from './SellerMap'
 
 export {
     Buyers,
@@ -29,5 +33,9 @@ export {
     InactiveProducts,
     BuyerOrders,
     Reservation,
-    SellerShopPage
+    SellerShopPage,
+    BuyerAccount,
+    BuyerNotification,
+    ReservationTab,
+    SellerMap
 }

@@ -7,7 +7,9 @@ const Header = props => {
   return (
     // <nav id='navbar' className='navbar navbar-expand-lg navbar-dark bg-dark fixed-top'>
     <nav id='navbar' className='navbar navbar-expand-lg navbar-light bg-light fixed-top'>
-      <Link to='/' className='nav-link text-danger'><h2><b>iPasalubongPH</b></h2></Link>
+      <Link to='/' className='nav-link'>
+        <h2 className='iPasalubongPH'>iPasalubongPH</h2>
+      </Link>
       <button 
         className='navbar-toggler ml-auto' 
         type='button' 

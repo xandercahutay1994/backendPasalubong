@@ -3,3 +3,105 @@
       margin-top: 1%
   }
 }
+
+.sellerReg {
+  margin-top: 8rem;
+}
+
+.dti-image-font {
+  font-size: 1rem;
+  margin-top: -2.7rem;
+  margin-bottom: 2.7rem;
+  color: green;
+}
+
+
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #3e8e41;
+}
+
+#myInput {
+  box-sizing: border-box;
+  background-position: 14px 12px;
+  background-repeat: no-repeat;
+  font-size: 16px;
+  padding: 14px 20px 12px 45px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+}
+
+#myInput:focus {outline: 3px solid #ddd;}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  position: absolute;
+  background-color: #f6f6f6;
+  min-width: 600px;
+  overflow: auto;
+  border: 1px solid #ddd;
+  margin-top: -5px;
+  z-index: 999;
+}
+
+.dropdown-content .linkTo {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown .linkTo:hover {background-color: #ddd;} 
+
+
+/*  FORM STEP THREE */
+.img-permit {
+  margin-top: -1rem;
+  width: 70px;
+  height: 70px;
+  margin-right: 1rem;
+}
+
+.img-permit:hover {
+  cursor: pointer;
+  background: khaki;
+}
+
+.permit-div {
+  display: flex;
+  top: 2rem;
+  position: relative;
+  flex-direction: column;
+  margin-bottom: 3rem;
+}
+
+.label-permit {
+  position: absolute;
+  margin-top: 4rem;
+  align-self: center;
+}
+
+.label-permit h5 {
+  font-size: 15px;
+}
+
+.dti-image-span {
+  margin: 4rem auto auto 7rem ;
+  position: absolute;
+}
+
+.dti-image-permits  {
+  /* margin: 10%; */
+}

@@ -40,7 +40,9 @@ const FullScreenDialog = ({
           <IconButton color="inherit" onClick={closeFullDialog} aria-label="Close">
             <CloseIcon />
           </IconButton>
-          <Button color="inherit" onClick={closeFullDialog}/>
+          <Button color="inherit" onClick={closeFullDialog}>
+            Close
+          </Button>
         </Toolbar>
       </AppBar>
       <List className='m-5'>

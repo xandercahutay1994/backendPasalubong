@@ -1,13 +1,13 @@
 .homeForm {
-  margin-top: -0.2rem;
+  /* margin-top: -0.2rem;
   background: #f7f4f4;
   display: flex;
   justify-content: center;
-  flex-direction: row;  
+  flex-direction: row;   */
 }
 
 @media screen and (max-width: 992px){
-  .homeForm{
+  /* .homeForm{
     display: flex;
     flex-direction: column;
     padding: 0;
@@ -15,7 +15,7 @@
     top: 0;
     width: auto;
     bottom: 0;
-  }
+  } */
 }
 
 .searchType {

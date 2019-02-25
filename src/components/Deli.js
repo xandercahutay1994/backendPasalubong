@@ -4,11 +4,12 @@ import ImageLoader from './ImageLoader'
 import { NavLink as Link } from 'react-router-dom'
 import { productImgURL } from '../redux/api/api'
 
-const CardLists = ({ 
-  sellersProduct, products, login_id, sessionSetId,
+const Deli = ({ 
+  productLists, products, login_id, sessionSetId,
   onShowFullDialog, inventoryReport, user_type
 }) => {
-  const lists = products.length > 0 ? (products || []) : (sellersProduct || [])
+  const lists = (productLists || [])
+
   return lists.map((product, i) => (
     <Card className="card cardLists" key={i}>
       <Link 
@@ -42,4 +43,4 @@ const CardLists = ({
   ))
 }
 
-export default CardLists
+export default Deli

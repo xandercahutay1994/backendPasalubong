@@ -16,6 +16,7 @@ import {
     SEARCH_PRODUCT_NAME_ACTION,
     CLEAR_PRODUCTS_IF_LOGOUT_ACTION
 } from '../../redux/actions/product'
+import { GET_ORDERS_OF_BUYERS_ACTION } from '../../redux/actions/seller';
 const history = createBrowserHistory()
 
 class ProductLists extends React.PureComponent {
@@ -29,7 +30,9 @@ class ProductLists extends React.PureComponent {
     }
 
     componentDidMount() {
+        document.title = 'Active Products'
         this.props.dispatch(GET_PRODUCTS_ACTION(this.props.login_id))
+        // this.props.dispatch(GET_ORDERS_OF_BUYERS_ACTION({seller_id: this.props.login_id}))
     }   
 
     componentWillUnMount() {
@@ -113,16 +116,18 @@ class ProductLists extends React.PureComponent {
           this.props.dispatch(SEARCH_PRODUCT_NAME_ACTION({ seller_id: login_id, advance_search:value }))   
         })
     }
+    
     render() {
         const { openFullDialog } = this.state
         return(
-            <div className='container-fluid productDetailsContainer'>
+            // <div className='container-fluid productDetailsContainer'>
+            <div className='container-fluid'>
                 { this.renderTitle() }
                 <input  
                     name="advance_search" 
                     value={this.state.advance_search}
                     onChange={this.handleOnChange}
-                    className='col-lg-12 form-control'
+                    className='col-lg-12 form-control mt-3'
                     placeholder='Search Item here'
                     autoFocus
                 />

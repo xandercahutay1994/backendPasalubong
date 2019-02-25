@@ -19,6 +19,7 @@ import {
   CLEAR_CART_ACTION
 } from '../redux/actions/cart'
 import { GET_ALL_SELLERS_PRODUCT_ACTION } from '../redux/actions/product';
+import { UPDATE_SELLER_ACCOUNT_ACTION, OPEN_ORDERS_NOTIFICATION_ACTION, GET_BUYERS_NOTICATION_ACTION } from '../redux/actions/seller';
 const history = createBrowserHistory()
 
 class Index extends React.PureComponent {
@@ -31,6 +32,9 @@ class Index extends React.PureComponent {
     const user  = JSON.parse(localStorage.getItem('state'))
     if (user && user.login_id) {
       // history.push('/')
+    }
+    if (user && user.user && user.user.user_type && user.user.user_type === 'buyer') {
+      // this.props.dispatch(GET_BUYERS_NOTICATION_ACTION({ buyer_id: this.props.login_id }))
     }
   }
 
@@ -73,10 +77,16 @@ class Index extends React.PureComponent {
     return null
   }
 
-  filterListsByCategory = e => {
-    // const { name } = e.target
+  handleUpdateAccount = () => {
+    this.props.dispatch(UPDATE_SELLER_ACCOUNT_ACTION())
+  }
 
+  handleOpenOrders = () => {
+    this.props.dispatch(OPEN_ORDERS_NOTIFICATION_ACTION())
+  }
 
+  handleOpenBuyersNotification = () => {
+    history.push('/notification') 
   }
 
   render() {
@@ -93,6 +103,9 @@ class Index extends React.PureComponent {
             login_id={login_id}   
             loginHasClick={this.handleVisibleLogin} 
             isLogout={this.handleLogout}
+            onUpdateAccount={this.handleUpdateAccount}
+            onOpenOrders={this.handleOpenOrders}
+            onOpenBuyerNotification={this.handleOpenBuyersNotification}
             {...this.props}
           />
           { renderLogin }

@@ -16,6 +16,7 @@ import swal from 'sweetalert'
 
 class InactiveProducts extends React.PureComponent {
   componentDidMount() {
+    document.title = 'In-Active Products'
     const { user: { login_id } } = JSON.parse(localStorage.getItem('state'))
     this.props.dispatch(GET_DEACTIVATED_PRODUCTS_ACTION({seller_id : login_id}))
   } 

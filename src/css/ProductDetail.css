@@ -48,3 +48,37 @@
   border: none;
   background: none;
 }
+
+.view-shop {
+  background: red;
+  padding: 6px;
+  margin-top: -2.4rem;
+  position: absolute;
+  margin-left: 5rem;
+  color: white;
+  border-radius: 5px;
+}
+
+.view-shop:hover {
+  background: green;
+  /* margin-bottom: -15px; */
+}
+
+.view-shop-link {
+  margin-bottom: -1rem;
+}
+
+.view-map {
+  background: grey;
+  padding: 6px;
+  margin-top: -2.4rem;
+  position: absolute;
+  margin-left: 11rem;
+  color: white;
+  border-radius: 5px;
+}
+
+.view-map:hover {
+  background: green;
+}
+

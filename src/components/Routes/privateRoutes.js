@@ -8,7 +8,11 @@ import {
     Buyers, 
     Admin,
     BuyerOrders,
-    Reservation
+    Reservation,
+    SellerShopPage,
+    BuyerAccount,
+    BuyerNotification,
+    SellerMap
 } from '../../containers/ProtectedPages'
 import {
     Switch,
@@ -25,6 +29,10 @@ const PrivateRoutes = () => (
         <Route exact strict path='/checkout' component={Checkout}/>
         <Route exact strict path='/myOrders' component={BuyerOrders}/>
         <Route exact strict path='/myReservations' component={Reservation}/>
+        <Route exact strict path='/myAccount' component={BuyerAccount}/>
+        <Route exact strict path='/notification' component={BuyerNotification}/>
+        <Route exact strict path='/sellerPage/:id' component={SellerShopPage}/>
+        <Route exact strict path='/sellerMap/:id' component={SellerMap}/>
     </Switch>
 )
 

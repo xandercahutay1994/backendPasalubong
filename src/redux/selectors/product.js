@@ -26,7 +26,15 @@ export default createSelector(
             inventoryReport: seller.inventoryReport,
             comments: product.comments,
             buyerHasOrdered: product.buyerHasOrdered,
-            sellers: product.sellers
+            sellers: product.sellers,
+            isAddedToCart: cart.isAddedToCart,
+            matchSearch: product.matchSearch,
+            isUpdateAccount: seller.isUpdateAccount,
+            buyerDetails: product.buyerDetails,
+            buyerNotification: seller.buyerNotification,
+            delicacies: product.delicacies,
+            souvenirs: product.souvenirs,
+            listSellers: product.listSellers
         }
     }
 

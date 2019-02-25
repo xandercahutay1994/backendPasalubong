@@ -22,7 +22,18 @@
 
 .searchBar {
   position:fixed;
-  z-index:100;
+}
+
+.try {
+  width: 10rem;
+  padding-top: 0;
+  overflow: hidden;
+}
+
+.filter-selected {
+  height: 2rem;
+  padding: 4px;
+  border-radius: 12px;
 }
 
 .sellerRow {
@@ -44,4 +55,110 @@
 
 .buyerOrders {
   margin-top: 5rem;
+}
+
+.homeForm {
+  display: flex;
+  justify-content: center;
+  background: #edeff2;
+  position:fixed;
+  margin-top: 4.1%;
+  padding: 5px;
+  /* overflow: auto; */
+}
+
+@media screen and (max-width: 992px){
+  .homeForm { 
+    margin-top: 7%;
+  }
+}
+
+@media screen and (max-width: 752px){
+  .homeForm { 
+    margin-top: 16%;
+  }
+}
+
+.shops-section {
+  font-size: 1.8rem;
+  font-stretch: condensed;
+  text-align: center;
+}
+
+.products-section {
+  font-size: 1.8rem;
+  font-stretch: condensed;
+  margin-top: 5rem;
+  margin-bottom: -2rem;
+}
+
+.renderListsOfSellers {
+  margin-top: 1.8rem;
+}
+
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #3e8e41;
+}
+
+#myInput {
+  box-sizing: border-box;
+  background-position: 14px 12px;
+  background-repeat: no-repeat;
+  font-size: 16px;
+  padding: 14px 20px 12px 45px;
+  border: none;
+  border-bottom: 1px solid #ddd;  
+}
+
+#myInput:focus {outline: 3px solid #ddd;}
+
+.dropdown {
+  position: relative;
+  display: inline-block;  
+  
+}
+
+.dropdown-content {
+  position: absolute;
+  background-color: #f6f6f6;
+  min-width: 600px;
+  border: 1px solid #ddd;
+  margin-top: -7px;
+  margin-left: -2rem;
+}
+
+.dropdown-content .linkTo {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;  
+}
+
+.dropdown .linkTo:hover {background-color: #ddd;} 
+
+.show {display: block; }
+
+.addToCart {
+  position: absolute;
+  margin-left: 10rem;
+  font-size: 12px;
+  padding: 2px;
+}
+
+.category-items {
+  /* display: none; */
+  margin-left: 9%;
+}
+
+.carts {
+  margin-left: -10rem;
 }

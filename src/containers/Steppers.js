@@ -8,6 +8,7 @@ import StepButton from '@material-ui/core/StepButton'
 const styles = theme => ({
   root: {
     width: '90%',
+    marginTop: '15%'
   },
   button: {
     marginRight: theme.spacing.unit,
@@ -24,19 +25,6 @@ const styles = theme => ({
 function getSteps() {
   return ['Verify email', 'Verify code', 'Account Details'];
 }
-
-// function getStepContent(step) {
-//   switch (step) {
-//     case 0:
-//       return 'Step 1: Verify email...';
-//     case 1:
-//       return 'Step 2: What is an ad group anyways?';
-//     case 2:
-//       return 'Step 3: This is the bit I really care about!';
-//     default:
-//       return 'Unknown step';
-//   }
-// }
 
 class Steppers extends React.Component {
   state = {
@@ -114,7 +102,6 @@ class Steppers extends React.Component {
 
 
   componentWillReceiveProps(props) {
-    // console.log('props',props)
     if (props.stepIndex === 0) {
       this.handleComplete()
     }

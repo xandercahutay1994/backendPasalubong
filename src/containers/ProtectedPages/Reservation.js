@@ -4,7 +4,13 @@ import { compose } from 'recompose'
 import '../../css/Reservation.css'
 import PasalubongTable from '../../components/PasalubongTable'
 import { cartSelector } from '../../redux/selectors'
-import { GET_RESERVATION_DETAILS_ACTION, DELETE_RESERVATION_ACTION, SEARCH_RESERVATION_ACTION, ADD_TO_CART_ACTION, MOVE_TO_CART_ACTION, RESET_CART_ACTION } from '../../redux/actions/cart'
+import { 
+  GET_RESERVATION_DETAILS_ACTION, 
+  DELETE_RESERVATION_ACTION, 
+  SEARCH_RESERVATION_ACTION, 
+  MOVE_TO_CART_ACTION, 
+  RESET_CART_ACTION 
+} from '../../redux/actions/cart'
 import ImageLoader from '../../components/ImageLoader'
 import { productImgURL } from '../../redux/api/api'
 import {
@@ -152,46 +158,56 @@ class Reservation extends React.PureComponent {
           </div>
           <PasalubongTable tableCell={tableCell}>
             {
-              reservations.map(({
-                image, name, reservation_date, product_id, buyer_id, category,
-                orderQuantity, reservation_id
-              }, i)=> (
-                <TableRow key={i}>
-                  <TableCell scope='row'> 
-                    <Button raised='raised' variant='outlined' color='primary' onClick={()=>this.callRenderDialog(image)}>
-                      { this.displayImage(image, 80, 80)}
-                    </Button>
-                  </TableCell>
-                  { bodyCell(name) }               
-                  { bodyCell(category) }                
-                  { bodyCell(orderQuantity) }                
-                  { bodyCell(reservation_date) }
-                  <TableCell scope='row'> 
-                    <div className='d-flex'>
-                      <Button 
-                        raised='raised' 
-                        color='secondary' 
-                        variant='outlined'
-                        className='btn-sm'
-                        disabled={isProcessing}
-                        onClick={()=>this.handleDelete(buyer_id, product_id)}
-                      >
-                        <i className='fa fa-close mr-1' style={{ fontSize: '18px' }}></i>  Delete
+              reservations &&
+              reservations.length > 0 ?
+                reservations.map(({
+                  image, name, reservation_date, product_id, buyer_id, category,
+                  orderQuantity, reservation_id
+                }, i)=> (
+                  <TableRow key={i}>
+                    <TableCell scope='row'> 
+                      <Button raised='raised' variant='outlined' color='primary' onClick={()=>this.callRenderDialog(image)}>
+                        { this.displayImage(image, 80, 80)}
                       </Button>
-                      <Button 
-                        raised='raised' 
-                        color='primary' 
-                        variant='contained'
-                        disabled={isProcessing}
-                        className='btn-sm btn-primary ml-3'
-                        onClick={()=>this.moveToCart(orderQuantity, product_id, reservation_id)}
-                      >
-                        <i className='fa fa-arrow-right' style={{ fontSize: '15px' }}></i>  Move To Cart
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))
+                    </TableCell>
+                    { bodyCell(name) }               
+                    { bodyCell(category) }                
+                    { bodyCell(orderQuantity) }                
+                    { bodyCell(reservation_date) }
+                    <TableCell scope='row'> 
+                      <div className='d-flex'>
+                        <Button 
+                          raised='raised' 
+                          color='secondary' 
+                          variant='outlined'
+                          className='btn-sm'
+                          disabled={isProcessing}
+                          onClick={()=>this.handleDelete(buyer_id, product_id)}
+                        >
+                          <i className='fa fa-close mr-1' style={{ fontSize: '18px' }}></i>  Delete
+                        </Button>
+                        <Button 
+                          raised='raised' 
+                          color='primary' 
+                          variant='contained'
+                          disabled={isProcessing}
+                          className='btn-sm btn-primary ml-3'
+                          onClick={()=>this.moveToCart(orderQuantity, product_id, reservation_id)}
+                        >
+                          <i className='fa fa-arrow-right' style={{ fontSize: '15px' }}></i>  Move To Cart
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))
+              :
+              <TableRow>
+                { bodyCell('') }
+                { bodyCell('') }
+                <TableCell>
+                  <span className='text-danger'>No Record Found</span>
+                </TableCell>
+              </TableRow>
             }
           </PasalubongTable>
         </div>

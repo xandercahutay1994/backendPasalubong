@@ -11,13 +11,23 @@ import {
     Orders,
     Deliveries,
     Report,
-    InactiveProducts
+    InactiveProducts,
+    ReservationTab
 } from '../../containers/ProtectedPages'
-
 class ListsTab extends React.PureComponent {
-    state = {
-        tabIndex: 0
+    constructor(props) {
+        super(props)
+        this.state = {
+            tabIndex: 0
+        }
     }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.activeIndex) {
+            this.setState({ tabIndex: nextProps.activeIndex })
+        }
+    }
+
 
     tabs = () => {
         const { tabIndex } = this.state
@@ -28,11 +38,13 @@ class ListsTab extends React.PureComponent {
         } else if (tabIndex === 2) {
             return <TabContainer><ProductAdd /></TabContainer>
         } else if (tabIndex === 3) {
+            return <TabContainer><ReservationTab /></TabContainer>
+        } else if (tabIndex === 4) {
             return <TabContainer> <Orders /></TabContainer>
         } else if (tabIndex === 5) {
-            return <TabContainer> <Report /> </TabContainer>
+            return <TabContainer> <Deliveries /></TabContainer>
         }
-        return <TabContainer> <Deliveries /></TabContainer>
+        return <TabContainer> <Report /> </TabContainer>
     }
 
     handleTabClick = index => {

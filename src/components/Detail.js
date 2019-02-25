@@ -9,6 +9,7 @@ import {
     Typography,
     Button
 } from '@material-ui/core'
+import Link from 'react-router-dom/Link';
 
 const Detail = ({
     image, 
@@ -25,7 +26,8 @@ const Detail = ({
     handleFormSubmit,
     cartCounter,
     onBack,
-    shopAddress
+    shopAddress,
+    seller_id
 }) => (
     <div className='details text-center row mb-5'>
         <Card className='col-lg-5 card-details card_detail'>
@@ -44,6 +46,12 @@ const Detail = ({
             <hr/>
             <Card>
                 <Typography className='text-primary' variant='h5'> ₱ { price }</Typography>
+                <Link to={`/sellerPage/${seller_id}`} className='nav-link view-shop-link'>
+                    <span className='view-shop'> View Shop </span>
+                </Link>
+                <Link to={`/sellerMap/${seller_id}`} className='nav-link view-shop-link'>
+                    <span className='view-map'> View Map </span>
+                </Link>
                 <div className='product_detail'>
                     <div className='row mB'>
                         <label className='label control-label col-sm-3'>Description</label>
@@ -97,7 +105,7 @@ const Detail = ({
                                 raised 
                                 color='primary' 
                                 variant='contained'
-                            />
+                            />  
                             <Button 
                                 raised='raised'
                                 variant='outlined'

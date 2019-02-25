@@ -6,8 +6,6 @@ import '../css/ProductDetail.css'
 import {
     Typography,
     Button,
-    FormControl,
-    Input
 } from '@material-ui/core'
 
 const ProductDialog = props => {
@@ -19,7 +17,6 @@ const ProductDialog = props => {
     price, 
     orderCounter, 
     description, 
-    discount, 
     quantity, 
     category,
   } = filteredProducts[0]
@@ -30,7 +27,6 @@ const ProductDialog = props => {
     closeFullDialog,
     onSubmit,
     onChange,
-    categoryState,
     descriptionState,
     quantityState,
     orderCounterState

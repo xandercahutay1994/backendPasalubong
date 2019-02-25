@@ -18,7 +18,19 @@ export default createSelector(
           inventoryReport: seller.inventoryReport,
           allSellers: seller.allSellers,
           ordersData: seller.ordersData,
-          coinsPayment: seller.coinsPayment
+          coinsPayment: seller.coinsPayment,
+          deliveries: seller.deliveries,
+          isUpdateAccount: seller.isUpdateAccount,
+          orderedBuyers: seller.orderedBuyers,
+          orderDetails: seller.orderDetails,
+          orders: seller.orders,
+          notifications: seller.notifications,
+          reservationDetails: seller.reservationDetails,
+          orderStatus: seller.orderStatus,
+          deliveryStatus: seller.deliveryStatus,
+          philPlaces: seller.philPlaces,
+          unpaid: seller.unpaid,
+          reservationDetails: seller.reservationDetails
         }
     }
 )

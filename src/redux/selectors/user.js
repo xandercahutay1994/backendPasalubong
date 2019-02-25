@@ -22,7 +22,13 @@ export default createSelector(
             cartOrderTotal: cart.cartOrderTotal,
             isCheckout: cart.isCheckout,
             productDetails: cart.productDetails,
-            unVerifiedSellers: seller.unVerifiedSellers
+            unVerifiedSellers: seller.unVerifiedSellers,
+            isUpdateAccount: seller.isUpdateAccount,
+            sellerDetails: seller.sellerDetails,
+            status: seller.resStatus,
+            notifications: seller.notifications,
+            ordersData: seller.ordersData,
+            activeIndex: seller.activeIndex
         }
     }
 

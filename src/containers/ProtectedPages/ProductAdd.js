@@ -22,6 +22,7 @@ class ProductAdd extends React.PureComponent {
             product_price: '',
             product_category: '',
             product_description: '',
+            minimum_order: '',
             issubmit: false,
         }
     }
@@ -33,6 +34,9 @@ class ProductAdd extends React.PureComponent {
         })
     }
 
+    componentDidMount() {
+        document.title = 'Add Products'
+    }
     componentWillReceiveProps(nextProps) {
         if (nextProps.resStatus !== 200) {
             this.setState({
@@ -54,6 +58,7 @@ class ProductAdd extends React.PureComponent {
             product_price: '',
             product_category: '',
             product_description: '',
+            minimum_order: '',
             issubmit: false,
         }, () => {
             swal({
@@ -81,7 +86,10 @@ class ProductAdd extends React.PureComponent {
     handleFormSubmit = e => {
         e.preventDefault()
         this.setState({ issubmit: true, isBtnDisabled: true })
-        const { img_url, product_name, quantity, product_price, product_category, product_description } = this.state
+        const { 
+            img_url, product_name, quantity, product_price,
+            product_category, product_description, minimum_order
+        } = this.state
         const { email } = this.props
 
         const postData = {
@@ -90,6 +98,7 @@ class ProductAdd extends React.PureComponent {
             product_price,
             quantity,
             img_url,
+            minimum_order,
             product_category,
             product_description
         }
@@ -106,8 +115,8 @@ class ProductAdd extends React.PureComponent {
             product_category, 
             product_description ,
             issubmit,
+            minimum_order,
         } = this.state
-        const { message } = this.props
         return (
             <div>
                 <div className='productAdd'>
@@ -121,6 +130,7 @@ class ProductAdd extends React.PureComponent {
                         <div className='form-group'>
                             <label>Product Name *</label>
                             <input 
+                                required
                                 type='text' 
                                 name='product_name'
                                 onChange={this.handleInputChange}
@@ -132,6 +142,7 @@ class ProductAdd extends React.PureComponent {
                         <div className='form-group'>
                             <label>Quantity *</label>
                             <input 
+                                required
                                 type='number' 
                                 name='quantity'
                                 onChange={this.handleInputChange}
@@ -143,8 +154,10 @@ class ProductAdd extends React.PureComponent {
                         <div className='form-group'>
                             <label>Price *</label>
                             <input 
+                                required
                                 type='number' 
                                 name='product_price'
+                                min='1'
                                 onChange={this.handleInputChange}
                                 value={product_price}
                                 className='form-control col-lg-6' 
@@ -152,8 +165,22 @@ class ProductAdd extends React.PureComponent {
                             />
                         </div>
                         <div className='form-group'>
+                            <label>Minimum Order *</label>
+                            <input 
+                                required
+                                type='number' 
+                                name='minimum_order'
+                                min='1'
+                                onChange={this.handleInputChange}
+                                value={minimum_order}
+                                className='form-control col-lg-6' 
+                                placeholder='Enter Minimum Order'
+                            />
+                        </div>
+                        <div className='form-group'>
                             <label>Category *</label>
                             <select 
+                                required
                                 name='product_category'
                                 onChange={this.handleInputChange}
                                 value={product_category}
@@ -166,6 +193,7 @@ class ProductAdd extends React.PureComponent {
                         <div className='form-group'>
                             <label>Description *</label>
                             <textarea 
+                                required
                                 name='product_description'
                                 onChange={this.handleInputChange}
                                 value={product_description}

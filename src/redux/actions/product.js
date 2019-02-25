@@ -19,7 +19,13 @@ import {
     GET_ALL_REVIEWS_OF_PRODUCT_REQUESTED,
     CLEAR_PRODUCTS_IF_LOGOUT,
     CLEAR_PRODUCT_DETAILS,
-    LISTS_OF_SELLERS_REQUESTED
+    LISTS_OF_SELLERS_REQUESTED,
+    CLEAR_MATCH_SEARCH,
+    GET_BUYER_DETAILS_REQUESTED,
+    UPDATE_BUYER_DETAILS_REQUESTED,
+    CLEAR_STATUS_BUYER,
+    GET_SOUVENIRS_BEST_REQUESTED,
+    GET_DELICACIES_BEST_REQUESTED
 } from '../types/product'
 
 
@@ -162,5 +168,43 @@ export function CLEAR_PRODUCT_DETAILS_ACTION() {
 export function LISTS_OF_SELLERS_ACTION() {
     return {
         type: LISTS_OF_SELLERS_REQUESTED
+    }
+}
+
+export function CLEAR_MATCH_SEARCH_ACTION() {
+    return {
+        type: CLEAR_MATCH_SEARCH
+    }
+}
+
+export function GET_BUYER_DETAILS_ACTION(payload) {
+    return {
+      type: GET_BUYER_DETAILS_REQUESTED,
+      payload
+    }
+}
+
+export function UPDATE_BUYER_DETAILS_ACTION(payload) {
+    return {
+        type: UPDATE_BUYER_DETAILS_REQUESTED,
+        payload
+    }
+}
+
+export function GET_SOUVENIRS_BEST_ACTION() {
+    return {
+        type: GET_SOUVENIRS_BEST_REQUESTED
+    }
+}
+
+export function GET_DELICACIES_BEST_ACTION() {
+    return {
+        type: GET_DELICACIES_BEST_REQUESTED
+    }
+}
+
+export function CLEAR_STATUS_BUYER_ACTION() {
+    return {
+        type: CLEAR_STATUS_BUYER
     }
 }

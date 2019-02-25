@@ -7,9 +7,8 @@ import {
   Radio,
   FormControlLabel,
   FormControl,
+  Snackbar
 } from '@material-ui/core'
-import ButtonSpinner from '../../components/ButtonSpinner'
-import DatePicker from 'react-datepicker'
 import {
   cities,
   provinces
@@ -19,6 +18,7 @@ import {
   CHECKOUT_ACTION,
   CLEAR_CART_ACTION
 } from '../../redux/actions/cart'
+import Button from '@material-ui/core/Button/Button';
 
 class Checkout extends React.PureComponent {
 
@@ -34,6 +34,9 @@ class Checkout extends React.PureComponent {
       zip_code: '',
       date: '',
       payment_type: '',
+      isSubmit: false,
+      vertical: 'top',
+      horizontal: 'center'
     }
   }
 
@@ -53,6 +56,7 @@ class Checkout extends React.PureComponent {
         zip_code: '',
         date: '',
         payment_type: '',
+        isSubmit: false
       }, ()=> {
         dispatch(CLEAR_CART_ACTION())
         setTimeout(()=> {
@@ -69,7 +73,8 @@ class Checkout extends React.PureComponent {
   handleOnChange = e => {
     const { name, value } = e.target
     this.setState({
-      [name] : value
+      [name] : value,
+      error: false
     })
   }
 
@@ -80,24 +85,33 @@ class Checkout extends React.PureComponent {
       city,
       province,
       zip_code,
-      date,
+      // date,
       payment_type
     } = this.state
+
+    if (!city || !zip_code || !province || !address || !payment_type) {
+      this.setState({ error: true })
+      return 
+    }
+    const checkDate = new Date()
     const { totalPayment, dispatch, login_id, cartData } = this.props
+    const totalShipping = cartData && cartData.reduce((acc, curr) => acc += curr.shipping_fee, 0)
     const details = cartData.map(data => ({ product_id: data.product_id, orderQuantity: data.orderQuantity, seller_id: data.seller_id }))
     const postData = {
       buyer_id: login_id,
-      totalPayment,
+      totalPayment: Number(totalPayment) + Number(totalShipping),
       city,
       province,
       address,
-      date,
+      date: checkDate,
       zip_code,
       payment_type,
       details,
     }
     
-    dispatch(CHECKOUT_ACTION(postData))
+    this.setState({ isSubmit: true }, ()=> {
+      dispatch(CHECKOUT_ACTION(postData))
+    })
   }
 
   renderCityLists = () => {
@@ -128,8 +142,11 @@ class Checkout extends React.PureComponent {
     const { 
       address,
       zip_code,
-      date,
       payment_type,
+      isSubmit,
+      vertical,
+      horizontal,
+      error
     } = this.state
     const {
       totalPayment,
@@ -138,17 +155,32 @@ class Checkout extends React.PureComponent {
         firstname,
         lastname
       },
+      cartData,
       isCheckout
     } = this.props
+    const totalShipping = cartData && cartData.reduce((acc, curr) => acc += curr.shipping_fee, 0)
 
     return(
-      <form className='col-lg-10 mt-4' onSubmit={this.handleFormSubmit}>
-      <DatePicker
-          selected={this.state.startDate}
-          onChange={()=>{}}
+      <form 
+        className='col-lg-10 mt-4' 
+        onSubmit={this.handleFormSubmit}>
+        <Snackbar
+          anchorOrigin={{ vertical, horizontal }}
+          open={error}
+          onClose={()=>{}}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">
+            <i className='fa fa-close text-danger' style={{ fontSize: '20px', marginRight: '5px' }}></i>
+            All fields are required to fill in!
+          </span>}
         />
-        <h2 className='text-center buyer'> Checkout Details </h2>
-          <div className='row'>
+        <h2 className='text-center buyer'
+          style={{ marginTop: '8rem', marginBottom: '6rem' }}
+        > Checkout Details </h2>
+          <div className='row'
+          >
             <div className='col-md'>
               <label>Full Name </label>
               <input 
@@ -166,7 +198,7 @@ class Checkout extends React.PureComponent {
                 type='text' 
                 name='total_payment'
                 className='form-control col-lg-6 col-md-6' 
-                value={totalPayment}
+                value={Number(totalPayment) + Number(totalShipping)}
                 disabled
                 // onChange={this.handleOnChange}
               />
@@ -232,7 +264,7 @@ class Checkout extends React.PureComponent {
                 />
             </div>
           </div>
-          <div className='form-group mt-3'>
+          {/* <div className='form-group mt-3'>
             <label>Date *</label>
             <input 
                 type='date' 
@@ -241,8 +273,8 @@ class Checkout extends React.PureComponent {
                 onChange={this.handleOnChange} 
                 value={date}
               />
-          </div>
-          <FormControl component="fieldset">
+          </div> */}
+          <FormControl component="fieldset" className='mt-3'>
             <label> Payment Type * </label>
               <FormControlLabel 
                 name='payment_type'
@@ -271,13 +303,24 @@ class Checkout extends React.PureComponent {
                 onChange={this.handleOnChange}
               />
           </FormControl>
-          <ButtonSpinner
-            name={'FINISH CHECKOUT'}
+          <Button
+            type='submit'
             raised='raised'
             color='primary'
             variant='contained'
             className='btn-block mt-3 mb-5'
-          />
+            disabled={isSubmit}
+          >
+            { isSubmit &&
+              <i className="fa fa-circle-o-notch fa-spin"></i>
+            }
+            {
+              isSubmit ?
+                ' Submitting...'
+              :
+                'SUBMIT DETAILS'
+            }
+          </Button>
           { isCheckout && this.checkoutMessage() }
       </form>
     )

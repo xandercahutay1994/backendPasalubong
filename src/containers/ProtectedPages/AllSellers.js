@@ -42,6 +42,7 @@ class AllSellers extends React.PureComponent {
 
   state = {
     image: '',
+    permit_type: '',
     open: false,
     openSnackbar: false,
     status: '',
@@ -82,18 +83,19 @@ class AllSellers extends React.PureComponent {
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              { this.displayImage(this.state.image, 400, 300)}
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="secondary" variant='outlined' className='mr-auto'>
-              <i className='fa fa-close'></i> Close
-            </Button>
-            <Button onClick={this.handleClose} color="primary" variant='contained'>
-              <i className='fa fa-download'></i> Download
-            </Button>
-          </DialogActions>
+          <h5 className='text-success text-center'> {this.state.permit_type.toUpperCase()} PERMIT </h5>
+          <DialogContentText id="alert-dialog-slide-description">
+            { this.displayImage(this.state.image, 400, 300)}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.handleClose} color="secondary" variant='outlined' className='mr-auto'>
+            <i className='fa fa-close'></i> Close
+          </Button>
+          <Button onClick={this.handleClose} color="primary" variant='contained'>
+            <i className='fa fa-download'></i> Download
+          </Button>
+        </DialogActions>
       </Dialog>
     </Paper>
   )
@@ -106,9 +108,10 @@ class AllSellers extends React.PureComponent {
     />
   )
 
-  callRenderDialog = image => {
+  callRenderDialog = (image, permit_type) => {
     this.setState({
       image,
+      permit_type,
       open: true
     })
   }
@@ -154,7 +157,7 @@ class AllSellers extends React.PureComponent {
       horizontal,
       advance_search
     } = this.state
-    const tableCell = ['DTI Permit Image', 'Name', 'Address', 'Status', 'Action']
+    const tableCell = ['DTI Permit', 'Business Permit', 'Sanitary Permit', 'Name', 'Address', 'Status', 'Action']
     const bodyCell = (row, i) => ( <TableCell key={i}> { row } </TableCell> )
     return( 
       <React.Fragment>
@@ -183,12 +186,22 @@ class AllSellers extends React.PureComponent {
         <PasalubongTable tableCell={tableCell}>
           {
             allSellers.map(({
-              seller_id, image, title, shopName, shopAddress, status
+              seller_id, image, title, shopName, shopAddress, status, business, sanitary
             }, i) => (
               <TableRow key={i} className='card'>
                 <TableCell component="th" scope="row"> 
-                  <Button raised='raised' variant="outlined" color="primary" onClick={()=>this.callRenderDialog(image)}>
+                  <Button raised='raised' variant="outlined" color="primary" onClick={()=>this.callRenderDialog(image, 'dti')}>
                     { this.displayImage(image, 80, 80)}
+                  </Button>
+                </TableCell>
+                <TableCell component="th" scope="row"> 
+                  <Button raised='raised' variant="outlined" color="primary" onClick={()=>this.callRenderDialog(business, 'business')}>
+                    { this.displayImage(business, 80, 80)}
+                  </Button>
+                </TableCell>
+                <TableCell component="th" scope="row"> 
+                  <Button raised='raised' variant="outlined" color="primary" onClick={()=>this.callRenderDialog(sanitary, 'sanitary')}>
+                    { this.displayImage(sanitary, 80, 80)}
                   </Button>
                 </TableCell>
                 { bodyCell(shopName) }

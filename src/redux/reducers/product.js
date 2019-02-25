@@ -12,7 +12,12 @@ const productInitialState = {
     deactivatedProducts: [],
     comments: [],
     buyerHasOrdered: [],
-    sellers: []
+    sellers: [],
+    matchSearch: [],
+    buyerDetails: {},
+    delicacies: [],
+    souvenirs: [],
+    listSellers: []
 }
 
 const productActionsHandler = {
@@ -122,10 +127,16 @@ const productActionsHandler = {
             deactivatedProducts: products
         }
     },
-    FILTER_BY_PLACES: (state, { sellersProduct }) => {
+    FILTER_BY_PLACES: (state, { matchSearch }) => {
         return {
             ...state,
-            sellersProduct
+            matchSearch
+        }
+    },
+    CLEAR_MATCH_SEARCH: (state) => {
+        return {
+            ...state,
+            matchSearch: []
         }
     },
     SEARCH_PRODUCT_BY_NAME: (state, { products}) => {
@@ -173,10 +184,42 @@ const productActionsHandler = {
             comments: []
         }
     },
-    LISTS_OF_SELLERS: (state, { sellers }) => {
+    LISTS_OF_SELLERS: (state, { sellers, listSellers }) => {
         return {
             ...state,
-            sellers
+            sellers,
+            listSellers
+        }
+    },
+    RETRIEVED_BUYER_DETAILS: (state, { buyerDetails }) => {
+        return {
+          ...state,
+          buyerDetails
+        }
+    },
+    UPDATE_BUYER_DETAILS: (state, { buyerDetails }) => {
+        return {
+          ...state,
+          buyerDetails,
+          resStatus: 200
+        }
+    },
+    CLEAR_STATUS_BUYER: (state) => {
+        return {
+            ...state,
+            resStatus: ''
+        }
+    },
+    RETRIEVED_DELICACIES_BEST: (state, { delicacies }) => {
+        return {
+          ...state,
+          delicacies
+        }
+    },
+    RETRIEVED_SOUVENIRS_BEST: (state, { souvenirs }) => {
+        return {
+          ...state,
+          souvenirs
         }
     }
 }

@@ -14,17 +14,20 @@ import {
     GET_ALL_COMMENTS_BY_PRODUCT_ACTION,
     GIVE_FEEDBACK_RATE_ACTION,
     CHECK_IF_BUYER_ORDERED_ACTION,
-    CLEAR_PRODUCT_DETAILS_ACTION
+    CLEAR_PRODUCT_DETAILS_ACTION,
+    CLEAR_MATCH_SEARCH_ACTION
 } from '../../redux/actions/product'
 import { 
     SHOW_LOGIN_DIALOG_ACTION,
 } from '../../redux/actions/user'
 import { 
-    ADD_TO_CART_ACTION
+    ADD_TO_CART_ACTION,
+    CLEAR_ADDED_TO_CART_ACTION
 } from '../../redux/actions/cart'
 import {
     Badge,
-    Paper
+    Paper,
+    Snackbar
 }from '@material-ui/core'
 import {
     Card,
@@ -49,6 +52,7 @@ class ProductDetails extends React.PureComponent {
         dispatch(CLEAR_CART_QUANTITY_ACTION())
         dispatch(GET_ALL_COMMENTS_BY_PRODUCT_ACTION({ product_id: id }))
         dispatch(CHECK_IF_BUYER_ORDERED_ACTION({ buyer_id: login_id, product_id: id }))
+        dispatch(CLEAR_MATCH_SEARCH_ACTION())  
         localStorage.setItem('route', location.pathname)
     }
 
@@ -68,6 +72,12 @@ class ProductDetails extends React.PureComponent {
                 }, 1500)
             })
         }
+
+        if (nextProps.isAddedToCart) {
+            setTimeout(()=>{
+                nextProps.dispatch(CLEAR_ADDED_TO_CART_ACTION())
+            }, 1500)
+        }
     }
 
     componentWillUnmount() {
@@ -83,11 +93,17 @@ class ProductDetails extends React.PureComponent {
     }
 
     handleQuantityIncrement = () => {
-        this.setState({ cartCounter: this.state.cartCounter + 1})
+        const { productDetails : { quantity } } = this.props
+        const { cartCounter } = this.state
+        if (cartCounter >= 1 && cartCounter < quantity) {
+            this.setState({ cartCounter: this.state.cartCounter + 1})
+        }
     }
 
     handleQuantityDecrement = () => {
-        this.setState({ cartCounter: this.state.cartCounter - 1})
+        if (this.state.cartCounter > 1) {
+            this.setState({ cartCounter: this.state.cartCounter - 1})
+        }
     }
 
     handleFormSubmit = e => {
@@ -130,6 +146,11 @@ class ProductDetails extends React.PureComponent {
 
     backToSellerPage = () => {
         const { dispatch, history } = this.props
+        const seller_id = JSON.parse(localStorage.getItem('sellerPageId'))
+        if (seller_id) {
+            history.push(`/sellerPage/${seller_id}`)
+            return
+        }
         localStorage.removeItem('route')
         this.setState({ 
             isProcessing: false,
@@ -183,7 +204,6 @@ class ProductDetails extends React.PureComponent {
                 dispatch(GIVE_FEEDBACK_RATE_ACTION(postData))
             })
         }
-        
     }
 
     handleRatings = rate => {
@@ -259,7 +279,7 @@ class ProductDetails extends React.PureComponent {
 
         return (
             <div className='container mb-3'>
-                <h5> Reviews of { productDetails.name } </h5>
+                <h5> Reviews of { productDetails ? productDetails.name : '' } </h5>
                 {
                     comments && comments.length > 0 ?
                     comments.map(({ feedback, rate, firstname, lastname, buyer_id }, i) => (
@@ -326,9 +346,22 @@ class ProductDetails extends React.PureComponent {
     render() {
         const totalOrder = localStorage.getItem('cartOrderTotal')
         const badgeColor = typeof totalOrder === 'object' ? 'default' : 'secondary'
-
+        const vertical = 'top'
+        const horizontal = 'center'
         return (
             <div className='container productDetails'>
+                <Snackbar
+                    anchorOrigin={{ vertical, horizontal }}
+                    open={this.props.isAddedToCart}
+                    onClose={()=>{}}
+                    ContentProps={{
+                        'aria-describedby': 'message-id',
+                    }}
+                    message={<span id="message-id">
+                    <i className='fa fa-check text-success' style={{ fontSize: '20px', marginRight: '5px' }}></i>
+                    Added to Cart Successfully
+                    </span>}
+                />
                 { this.props.login_id &&
                     <Card className='mt-5 d-flex justify-content-center'> 
                         <h5 className='text-primary'> Cart Total = </h5>
